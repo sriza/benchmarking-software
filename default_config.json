@@ -1,0 +1,16 @@
+{
+    "device": "coral_tpu",
+    "models": ["tflite"],
+    "alternative_models": ["pb"],
+    "quantization": {
+        "datatype": "int8"
+    },
+    "inference_attempts":"5",
+    "metrics" : {
+        "temperature":"20",
+        "power" :"2",
+        "accuracy" :"80",
+        "latency": "2"
+    },
+    "report_format": "csv"
+}
