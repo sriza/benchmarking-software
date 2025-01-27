@@ -1,6 +1,6 @@
 
 import time
-from pycoral.learn.backprop.softmax_regression import get_accuracy
+# from pycoral.learn.backprop.softmax_regression import get_accuracy
 
 '''
 Class to collect data based on different metrics
@@ -28,7 +28,7 @@ class BaseMetrics:
         pass
     
     def accuracy(self, mat_x,  labels):
-        get_accuracy(mat_x, labels)
+        # get_accuracy(mat_x, labels)
         pass
     
     def _resetTimer():

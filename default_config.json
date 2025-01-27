@@ -12,5 +12,6 @@
         "accuracy" :"80",
         "latency": "2"
     },
-    "report_format": "csv"
+    "report_format": "csv",
+    "selectedModels": "*"
 }

@@ -6,4 +6,18 @@ class BaseReport:
         self.initializeReport()
     
     def initializeReport(self):
+        print('createcsvfile')
         print('Base Report has been initialized')
+    
+    def collectParameters(self):
+        pass
+        
+        
+    def appendToReport(self):
+        pass
+    
+    def printReport(self):
+        pass
+    
+    def generateHTML(self):
+        pass
