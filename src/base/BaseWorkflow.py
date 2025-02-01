@@ -32,7 +32,7 @@ class BaseWorkflow:
             print("targeting", modelDirectories[directoryName])
             self.prepareModal(modelPath, labelPath, inputPath)
             
-            # self.inference.run()
+            self.inference.run()
             
             
             
