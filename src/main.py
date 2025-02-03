@@ -22,10 +22,10 @@ try:
 
     # # Get input and output tensors.
     input_details = interpreter.get_input_details()
-    print(input_details)
+    # print(input_details)
     output_details = interpreter.get_output_details()
-    print(output_details)
-    print(interpreter.get_signature_list())
+    # print(output_details)
+    # print(interpreter.get_signature_list())
 
     # # Prepare input data (shape must match the model's input shape).
     input_data = np.array(Image.open('./models/MobileNetV1/input/cat.png').convert('RGB').resize((224,224)), dtype=np.uint8)
@@ -39,7 +39,7 @@ try:
     # # Run the model.
     interpreter.invoke()
     interference_time = time.perf_counter() - start
-    print('inference_time', interference_time)
+    # print('inference_time', interference_time)
     
     classes = classify.get_classes(interpreter)
     imgClass = 0
@@ -52,10 +52,10 @@ try:
             iam = labels.get(c.id,c.id)
             # iam = c.id
     
-    print(imgClass, iam)
+    # print(imgClass, iam)
     # # Get the output data.
     output_data = interpreter.get_tensor(output_details[0]['index'])
-    print(output_data.shape)
+    # print(output_data.shape)
 except Exception as ex:
-    print('exception occured')
-    # print('Exception has occurred', repr(ex), ex.__traceback__)
+    # print('exception occured')
+    print('Exception has occurred', repr(ex), ex.__traceback__)

@@ -6,11 +6,5 @@
         "datatype": "int8"
     },
     "inference_attempts":"10",
-    "metrics" : {
-        "temperature":"20",
-        "power" :"2",
-        "accuracy" :"80",
-        "latency": "2"
-    },
     "report_format": "csv"
 }

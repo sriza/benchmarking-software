@@ -27,7 +27,7 @@ Alternative models is optional parameter can contain extension of models that ar
 
 Quantization is optional parameter that contains the type of quantization that is to be done to given model.
 
-Inference_attempts is number of inference to be done on modal.
+Inference_attempts is number of inference to be done on model.
 
 Metrics are json pair of type of metrics and threshold which is acceptable.
 - Temperature in degree C

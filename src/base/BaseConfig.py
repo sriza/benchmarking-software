@@ -14,20 +14,17 @@ class BaseConfig:
         self.initializeBaseConfig()
         
     def initializeBaseConfig(self):
+        print("------------------Reading the configuration file-----------------")
         # get set and check configurations
         self._getConfiguration()
         self._setConfiguration()
         self._checkValidityOfParameters()
         
-        # get relevant modals
+        # get relevant models
         self._checkIfModelExists()
-        print("------------------BaseConfig Initialized-----------------")
         
     
-    def __loadFromFile(self, filepath, strict = False):
-        # file = Path(filepath)
-        print("filepath", filepath)
-        
+    def __loadFromFile(self, filepath, strict = False):        
         if os.path.isfile(filepath):
             with open(filepath,'r') as file:
                 return json.load(file)
@@ -41,10 +38,17 @@ class BaseConfig:
         self._customConfiguration = self.__loadFromFile(self._configFileName)
     
     def _setConfiguration(self):
-        configurationKeys = self._defaultConfiguration.keys() & self._customConfiguration.keys()
-         
+        configurationKeys = set(list(self._defaultConfiguration.keys()) + list(self._customConfiguration.keys()))
         for param in configurationKeys:
             self.setBenchmarkingParameters(param)
+        self.setModelTask()
+        
+    def setModelTask(self):
+        modelTask = {}
+        if "modelTask" in self._customConfiguration:
+            modelTask = self._customConfiguration["modelTask"]
+
+        self._benchmarkingParameters["modelTask"] = {**self._defaultConfiguration["modelTask"] , **modelTask}
         
     def setBenchmarkingParameters(self, parameter):
         if parameter in self._customConfiguration:
@@ -76,9 +80,7 @@ class BaseConfig:
         
         if relevantModelCount == 0:
             raise Exception("We do not have models that are application for test. Please add models before you start again")
-        
-        print('No of valid models found:', relevantModelCount);  
-    
+            
     def getValidModelPath(self):
         relevantFileExtensions = self.getRelevantFileExtension()
         relevantModels = {}
@@ -90,6 +92,7 @@ class BaseConfig:
                 for item in os.listdir(subpath):
                     if item.endswith(tuple(relevantFileExtensions)):
                         relevantModels[subpath] = {
+                            "name": dir,
                             "model": os.path.join(subpath, item), 
                             "label": os.path.join(subpath,"label.txt"),
                             "input": os.path.join(subpath, "inputs")
@@ -106,7 +109,13 @@ class BaseConfig:
         
         return selectedModels
     
-    def getBenchmarkingParameter(self):
+    def getBenchmarkingParameter(self, paramName):
+        if paramName in self._benchmarkingParameters:
+            return self._benchmarkingParameters[paramName]
+        
+        raise Exception(f'Parameter with name {paramName} is not part of configuration.')
+    
+    def getBenchmarkingParameters(self):
         return self._benchmarkingParameters;  
     
     
