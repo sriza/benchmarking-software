@@ -1,5 +1,5 @@
 {
-    "device": "coral-tpu",
+    "device": "default",
     "models": ["tflite"],
     "alternative_models": ["pb"],
     "quantization": {
@@ -7,7 +7,7 @@
     },
     "inference_attempts":"5",
     "report_format": "csv",
-    "selectedModels": "*",
+    "selectedmodels": "*",
     "modelTask":{
         "EfficientDet-Lite0":  "detect",
         "EfficientDet-Lite3":  "detect",

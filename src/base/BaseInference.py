@@ -6,7 +6,6 @@ import tensorflow as tf
 from pycoral.utils.dataset import read_label_file
 from pycoral.adapters import classify, detect
 
-
 class BaseInference:
     def __init__(self, model_path, label_path, input_path):
         self.labels = ''
@@ -66,7 +65,7 @@ class BaseInference:
         self.setInputData()
         start = time.perf_counter()
         self.interpreter.invoke()
-        inference_time = (time.perf_counter() - start)*1000
+        inference_time = time.perf_counter() - start
         
         classes = classify.get_classes(self.interpreter)
         imgClass = 0
@@ -84,17 +83,20 @@ class BaseInference:
         self.setInputData()
         start = time.perf_counter()
         self.interpreter.invoke()
-        inference_time = time.perf_counter() - start
+        end = time.perf_counter()
+        inference_time = end - start
         classes = detect.get_objects(self.interpreter)
         imgClass = 0
         iam = 0
-
+                
         for c in classes:
             imgClass = max(imgClass,c.score)
-
+            
             if imgClass == c.score:
                 iam = self.getLabels().get(c.id,c.id)
-
+        
+        # Get the output data.
+        output_data = self.interpreter.get_tensor(self.getOutputDetails()[0]['index'])
         return [imgClass,inference_time, iam]
         
     def run(self, task):
@@ -104,4 +106,4 @@ class BaseInference:
             reportParams = self.classifyTask()
         else:
             raise Exception("Invalid model task"+ task)
-        return {"accuracy": reportParams[0], "inference_time": reportParams[1], "detectedAs": reportParams[2]}
+        return {"accuracy": reportParams[0]*100, "inference_time": reportParams[1]*1000, "detectedAs": reportParams[2]}

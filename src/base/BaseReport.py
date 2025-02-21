@@ -1,4 +1,6 @@
 import csv
+import matplotlib
+matplotlib.use('Agg')  # Set the backend to 'Agg'
 import matplotlib.pyplot as plt
 import pandas as pd
 import datetime
@@ -32,36 +34,43 @@ class BaseReport:
         self.writer.writeheader()
         
     def appendToReport(self, data):
-        print('Base Report has been initialized')
         self.writer.writerow(data)
+        print('Report has been saved to csv file')
 
     def closeFile(self):
         self.file.close()
 
     def plotBarGraph(self, df,column, xlabel, ylabel, task):
-        plt.figure(figsize=(8, 4))
-        plt.bar(df['modal_name'], df[column])
+        plt.figure(figsize=(10, 12))
+        plt.bar(df['model_name'], df[column])
         plt.title(f'bar plot of {column} for {task}')
+        
+        # Add values above each bar
+        for i, value in enumerate(df[column]):
+            plt.text(i, value + 0.02, str(round(value,2)), ha='center', va='bottom')
+            
+        plt.autoscale(enable=True, axis='y', tight=False)
+        plt.margins(y=0.1)
+        
         plt.xlabel(xlabel)
         plt.ylabel(ylabel)
-        plt.savefig(f'{self.folderpath}/{column}_bar_plot_{task}.png')
-        plt.show()
+        plt.xticks(rotation=45, ha='center')
+        plt.savefig(f'{self.folderpath}/{column}_bar_plot_{task}.png', dpi=300)
 
     def visualizeReport(self):
         self.closeFile()
-        self.file = open(self.filepath,'w', newline="")
-        self.writer = csv.DictReader(self.file)
-        print('visualizing Report')
+        print('------------------visualizing Report--------------')
         df = pd.read_csv(self.filepath)
 
         task_types = set(df['task'])
 
-        for task in task_types:
-            self.plotBarGraph(df, 'inference_time', 'modal', 'Inference Time (ms)', task)
-            self.plotBarGraph(df, 'modal_size', 'modal', 'Model Size (MB)', task)
-            self.plotBarGraph(df, 'accuracy', 'modal', 'Accuracy', task)
+        for task_name in task_types:
+            task_df = df[df["task"] == task_name]
+            self.plotBarGraph(task_df, 'inference_time', 'model', 'Inference Time (ms)', task_name)
+            self.plotBarGraph(task_df, 'model_size', 'model', 'Model Size (MB)', task_name)
+            self.plotBarGraph(task_df, 'accuracy', 'model', 'Accuracy', task_name)
+        
+        print('Reports successfully stored at location:',self.folderpath)
 
     def compareReport(self):
         pass
-
-

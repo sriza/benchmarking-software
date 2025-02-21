@@ -13,7 +13,7 @@ class BaseQuantizer:
     def _isQuantizationRequired():
         pass
     
-    def quantizeModel():
+    def quantizemodel():
         # converter = tf.lite.TFLiteConverter.from_keras_model("./models/New/Petals_to_the_Metal-70K_images-trainable_True-MobileNetV2.tflite")
         # converter.optimizations = [tf.lite.Optimize.DEFAULT]
         # converter.inference_input_type = tf.uint8

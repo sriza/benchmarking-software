@@ -93,7 +93,7 @@ class BaseConfig:
                     if item.endswith(tuple(relevantFileExtensions)):
                         relevantModels[subpath] = {
                             "name": dir,
-                            "model": os.path.join(subpath, item), 
+                            "model": os.path.join(subpath, item),
                             "label": os.path.join(subpath,"label.txt"),
                             "input": os.path.join(subpath, "inputs")
                             }
@@ -117,5 +117,3 @@ class BaseConfig:
     
     def getBenchmarkingParameters(self):
         return self._benchmarkingParameters;  
-    
-    

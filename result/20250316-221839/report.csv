@@ -1,0 +1,2 @@
+model_name,model_size,inference_time,accuracy,task
+MobileNetV1,4.0782470703125,19.353600000000526,39.453125,classify

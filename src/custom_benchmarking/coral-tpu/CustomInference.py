@@ -4,8 +4,8 @@ from pycoral.utils.edgetpu import make_interpreter
 
 
 class CustomInference(BaseInference):
-    def isValidModel(self):
-        return not super().isValidModel()
+    def isValidmodel(self):
+        return not super().isValidmodel()
 
     def isQuantizationNecessary(self):
         return super().isQuantizationNecessary()
@@ -13,7 +13,7 @@ class CustomInference(BaseInference):
     def initializeInterpreter(self):
         self.interpreter = make_interpreter(self.modelPath, device=':0')
 
-        if self.isValidModel():
+        if self.isValidmodel():
             self.interpreter.allocate_tensors()
             return True
         

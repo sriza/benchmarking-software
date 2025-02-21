@@ -1,7 +1,7 @@
 
-# from src.base.BaseWorkflow import BaseWorkflow
 from src.base.BaseConfig import BaseConfig
 from src.base.utils.Utility import getClass
+import traceback
 
 try:
     defaultBaseClass = "src.base"
@@ -25,6 +25,6 @@ try:
     workflow.run()
     
 except Exception as e:
-    print("Exception occurred: ", e)
+    print("Exception occurred: ", e, traceback.format_exc())
 finally:
     print("Benchmarking Completed Successfully")
